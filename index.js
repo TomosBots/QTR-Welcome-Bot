@@ -17,67 +17,119 @@ const WELCOME_CHANNEL_ID = process.env.WELCOME_CHANNEL_ID;
 const LOGO_URL = process.env.LOGO_URL || "";
 const WELCOME_IMAGE_URL =
   process.env.WELCOME_IMAGE_URL || "";
+
+const QTR_MAROON = 0x8A1538;
+const QTR_GOLD = 0xD4AF37;
+
 client.once("ready", () => {
-  console.log(`QTR Welcome Bot is online as ${client.user.tag}`);
+  console.log(
+    `🇶🇦 QTR Welcome Bot is online as ${client.user.tag}`
+  );
 });
 
 client.on("guildMemberAdd", async (member) => {
+  // PUBLIC WELCOME EMBED
   const welcomeEmbed = new EmbedBuilder()
-    .setColor(0x8A1538)
-    .setTitle("🇶🇦 Welcome to QTR!")
+    .setColor(QTR_MAROON)
+    .setTitle("🇶🇦  WELCOME TO QTR")
     .setDescription(
-      `Welcome ${member}!\n\n` +
-      "We're delighted to have you join the QTR family. " +
-      "Get to know our amazing members and look out for our events!\n\n" +
-      "👑 **Your first steps**\n" +
-      "• Read the <#1558637380926177380>\n" +
-      "• Meet the community here: <#1558635229634105384>\n" +
-      "• Check out the event channels here: <#1558637706702233710>\n\n" +
-      "*One family. One community. QTR.*"
+      `Welcome to the family, ${member}! 👑\n\n` +
+      "We're delighted to have you join **QTR • SUNDAY CITY**!\n" +
+      "You've joined a community built on friendship, amazing parties " +
+      "and unforgettable memories. ❤️\n\n" +
+      "━━━━━━━━━━━━━━━━━━━━\n\n" +
+      "👑 **YOUR FIRST STEPS**\n\n" +
+      `📜 **Read the Rules**\n` +
+      `Get to know our community: <#1558637380926177380>\n\n` +
+      `💬 **Meet the Family**\n` +
+      `Introduce yourself and say hello: <#1558635229634105384>\n\n` +
+      "🎉 **Stay Connected**\n" +
+      "Keep an eye out for updates and upcoming QTR events!\n\n" +
+      "━━━━━━━━━━━━━━━━━━━━\n\n" +
+      "**ONE FAMILY. ONE COMMUNITY. QTR.** ❤️"
     )
-    .setThumbnail(
-      LOGO_URL || member.guild.iconURL({ size: 256 })
-    )
-    .setFooter({ text: "QTR • Qatar • Welcome to the family" })
+    .setFooter({
+      text: "QTR • QATAR • WELCOME TO THE FAMILY"
+    })
     .setTimestamp();
 
-if (WELCOME_IMAGE_URL) {
-  welcomeEmbed.setImage(WELCOME_IMAGE_URL);
-}
+  const guildIcon = member.guild.iconURL({
+    size: 256,
+    extension: "png"
+  });
+
+  if (LOGO_URL || guildIcon) {
+    welcomeEmbed.setThumbnail(LOGO_URL || guildIcon);
+  }
+
+  if (WELCOME_IMAGE_URL) {
+    welcomeEmbed.setImage(WELCOME_IMAGE_URL);
+  }
+
+  // SEND PUBLIC WELCOME
   const channel = await member.guild.channels
     .fetch(WELCOME_CHANNEL_ID)
     .catch(() => null);
 
   if (channel && channel.isTextBased()) {
-    await channel.send({ embeds: [welcomeEmbed] })
-      .catch(err => console.error("Channel welcome failed:", err));
+    await channel.send({
+      content: `🇶🇦 Please give ${member} a warm welcome! 👑`,
+      embeds: [welcomeEmbed]
+    }).catch((err) => {
+      console.error("Channel welcome failed:", err);
+    });
   } else {
-    console.error("Welcome channel not found. Check its ID.");
+    console.error(
+      "Welcome channel not found. Check WELCOME_CHANNEL_ID."
+    );
   }
 
+  // PRIVATE WELCOME DM
   const dmEmbed = new EmbedBuilder()
-    .setColor(0xD4AF37)
-    .setTitle("🇶🇦 Welcome to QTR!")
+    .setColor(QTR_GOLD)
+    .setTitle("🇶🇦  WELCOME TO THE QTR FAMILY")
     .setDescription(
-      `Hey ${member.user.username}!\n\n` +
-      `Thanks for joining **${member.guild.name}**! 👑\n\n` +
-      "We're happy to have you with us. Please read the <#1558637380926177380> " +
-      "say hello in <#1558635229634105384>, and keep an eye on our event channels: <#1558637706702233710>.\n\n" +
-      "We hope you enjoy being part of the QTR family! ❤️"
+      `Hey **${member.user.username}**! 👋\n\n` +
+      `Thank you for joining **${member.guild.name}**. 👑\n\n` +
+      "We're so happy to have you with us!\n\n" +
+      "━━━━━━━━━━━━━━━━━━━━\n\n" +
+      "📜 **STEP 1 — KNOW THE RULES**\n" +
+      "Please read the server rules before getting involved.\n\n" +
+      "💬 **STEP 2 — SAY HELLO**\n" +
+      "Head to General Chat and introduce yourself to the family.\n\n" +
+      "🎉 **STEP 3 — ENJOY QTR**\n" +
+      "Get involved, make friends and look forward to our events!\n\n" +
+      "━━━━━━━━━━━━━━━━━━━━\n\n" +
+      "❤️ We're glad you're here. Welcome to the family!"
     )
-    .setFooter({ text: "QTR • Qatar • Welcome to the family" });
+    .setFooter({
+      text: "QTR • QATAR • ONE FAMILY"
+    })
+    .setTimestamp();
 
-  if (LOGO_URL) dmEmbed.setThumbnail(LOGO_URL);
+  if (LOGO_URL) {
+    dmEmbed.setThumbnail(LOGO_URL);
+  }
 
-  await member.send({ embeds: [dmEmbed] })
-    .catch(() => console.log(
+  await member.send({
+    embeds: [dmEmbed]
+  }).catch(() => {
+    console.log(
       `Could not DM ${member.user.tag}; their DMs may be closed.`
-    ));
+    );
+  });
 });
 
 if (!TOKEN) {
-  throw new Error("Missing DISCORD_TOKEN environment variable.");
+  throw new Error(
+    "Missing DISCORD_TOKEN environment variable."
+  );
+}
+
+if (!WELCOME_CHANNEL_ID) {
+  throw new Error(
+    "Missing WELCOME_CHANNEL_ID environment variable."
+  );
 }
 
 client.login(TOKEN);
-
