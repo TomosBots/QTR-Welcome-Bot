@@ -15,7 +15,8 @@ const client = new Client({
 const TOKEN = process.env.DISCORD_TOKEN;
 const WELCOME_CHANNEL_ID = process.env.WELCOME_CHANNEL_ID;
 const LOGO_URL = process.env.LOGO_URL || "";
-
+const WELCOME_IMAGE_URL =
+  process.env.WELCOME_IMAGE_URL || "";
 client.once("ready", () => {
   console.log(`QTR Welcome Bot is online as ${client.user.tag}`);
 });
@@ -40,6 +41,9 @@ client.on("guildMemberAdd", async (member) => {
     .setFooter({ text: "QTR • Qatar • Welcome to the family" })
     .setTimestamp();
 
+if (WELCOME_IMAGE_URL) {
+  welcomeEmbed.setImage(WELCOME_IMAGE_URL);
+}
   const channel = await member.guild.channels
     .fetch(WELCOME_CHANNEL_ID)
     .catch(() => null);
