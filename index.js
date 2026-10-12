@@ -30,9 +30,9 @@ client.on("guildMemberAdd", async (member) => {
       "We're delighted to have you join the QTR family. " +
       "Get to know our amazing members and look out for our events!\n\n" +
       "👑 **Your first steps**\n" +
-      "• Read the server rules\n" +
-      "• Meet the community\n" +
-      "• Check out the event channels\n\n" +
+      "• Read the <#1558637380926177380>\n" +
+      "• Meet the community here: <#1558635229634105384>\n" +
+      "• Check out the event channels here: <#1558637706702233710>\n\n" +
       "*One family. One community. QTR.*"
     )
     .setThumbnail(
@@ -61,8 +61,8 @@ if (WELCOME_IMAGE_URL) {
     .setDescription(
       `Hey ${member.user.username}!\n\n` +
       `Thanks for joining **${member.guild.name}**! 👑\n\n` +
-      "We're happy to have you with us. Please read the rules, " +
-      "say hello, and keep an eye on our event channels.\n\n" +
+      "We're happy to have you with us. Please read the <#1558637380926177380> " +
+      "say hello in <#1558635229634105384>, and keep an eye on our event channels: <#1558637706702233710>.\n\n" +
       "We hope you enjoy being part of the QTR family! ❤️"
     )
     .setFooter({ text: "QTR • Qatar • Welcome to the family" });
