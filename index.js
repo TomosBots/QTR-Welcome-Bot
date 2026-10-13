@@ -94,15 +94,12 @@ client.on("guildMemberAdd", async (member) => {
     })
     .setTimestamp();
 
-  const guildIcon = member.guild.iconURL({
-    size: 256,
-    extension: "png"
-  });
+  const memberAvatar = member.displayAvatarURL({
+  size: 256,
+  extension: "png"
+});
 
-  if (LOGO_URL || guildIcon) {
-    welcomeEmbed.setThumbnail(LOGO_URL || guildIcon);
-  }
-
+welcomeEmbed.setThumbnail(memberAvatar);
   if (WELCOME_IMAGE_URL) {
     welcomeEmbed.setImage(WELCOME_IMAGE_URL);
   }
