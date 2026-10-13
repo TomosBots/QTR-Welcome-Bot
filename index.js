@@ -63,10 +63,11 @@ client.once("ready", async () => {
 });
 
 client.on("guildMemberAdd", async (member) => {
-  // Refresh the counter when someone joins.
-  await updateMemberCounter(member.guild);
+  // Get the current member count immediately.
+const memberCount = member.guild.memberCount;
 
-  const memberCount = member.guild.memberCount;
+// Update the counter in the background without delaying the welcome.
+updateMemberCounter(member.guild).catch(console.error);
 
   const welcomeEmbed = new EmbedBuilder()
     .setColor(QTR_MAROON)
