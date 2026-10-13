@@ -78,7 +78,7 @@ updateMemberCounter(member.guild).catch(console.error);
       "You've joined a community built on friendship, amazing parties " +
       "and unforgettable memories. ❤️\n\n" +
       "━━━━━━━━━━━━━━━━━━━━\n\n" +
-      `👥 **QTR FAMILY MEMBERS: ${memberCount}**\n\n` +
+      `👥 **QTR Family Members: ${memberCount}**\n\n` +
       "━━━━━━━━━━━━━━━━━━━━\n\n" +
       "👑 **YOUR FIRST STEPS**\n\n" +
       "📜 **Read the Rules**\n" +
@@ -122,32 +122,37 @@ welcomeEmbed.setThumbnail(memberAvatar);
     );
   }
 
-  // Private welcome DM.
+  
+  // PRIVATE WELCOME DM
+  const dmAvatar = member.displayAvatarURL({
+    size: 256,
+    extension: "png"
+  });
+
   const dmEmbed = new EmbedBuilder()
     .setColor(QTR_GOLD)
-    .setTitle("🇶🇦  WELCOME TO THE QTR FAMILY")
+    .setTitle("🇶🇦 WELCOME TO THE QTR FAMILY")
     .setDescription(
       `Hey **${member.user.username}**! 👋\n\n` +
-      `Thank you for joining **${member.guild.name}**. 👑\n\n` +
-      `👥 **You're now part of a family of ${memberCount} members!**\n\n` +
+      `Thank you for joining **${member.guild.name}**! 👑\n\n` +
+      "We're delighted to have you with us. ❤️\n\n" +
       "━━━━━━━━━━━━━━━━━━━━\n\n" +
-      "📜 **STEP 1 — KNOW THE RULES**\n" +
-      "Read the server rules before getting involved.\n\n" +
-      "💬 **STEP 2 — SAY HELLO**\n" +
-      "Head to General Chat and introduce yourself to the family.\n\n" +
+      `👥 **QTR Family Members: ${member.guild.memberCount}**\n\n` +
+      "━━━━━━━━━━━━━━━━━━━━\n\n" +
+      "📜 **STEP 1 — READ THE RULES**\n" +
+      `Please read <#1558637380926177380> before getting involved.\n\n` +
+      "💬 **STEP 2 — MEET THE FAMILY**\n" +
+      `Introduce yourself in <#1558635229634105384>.\n\n` +
       "🎉 **STEP 3 — ENJOY QTR**\n" +
-      "Make friends and look forward to our events!\n\n" +
+      "Make friends, join the fun and look forward to our parties!\n\n" +
       "━━━━━━━━━━━━━━━━━━━━\n\n" +
-      "❤️ We're glad you're here. Welcome to the family!"
+      "❤️ **ONE FAMILY. ONE COMMUNITY. QTR.**"
     )
+    .setThumbnail(dmAvatar)
     .setFooter({
-      text: "QTR • QATAR • ONE FAMILY"
+      text: "QTR • QATAR • WELCOME TO THE FAMILY"
     })
     .setTimestamp();
-
-  if (LOGO_URL) {
-    dmEmbed.setThumbnail(LOGO_URL);
-  }
 
   await member.send({
     embeds: [dmEmbed]
